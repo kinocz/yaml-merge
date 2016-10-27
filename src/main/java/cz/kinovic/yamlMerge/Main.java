@@ -1,8 +1,14 @@
 package cz.kinovic.yamlMerge;
 
 import cz.kinovic.yamlMerge.configuration.Configuration;
+import cz.kinovic.yamlMerge.service.FolderReader;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * @author Ondrej Kinovic (ondrej@kinovic.cz)
@@ -48,9 +54,28 @@ public class Main {
 
     private void init(String... args) {
         try {
-            parser.parseArgument(args);
+            this.getParser().parseArgument(args);
         } catch (CmdLineException e) {
             printError(e.getMessage());
+            System.exit(1);
+        }
+
+        if (!this.getConfig().validate()) {
+            this.getConfig().getErrors().forEach(System.out::print);
+            System.exit(1);
+        }
+
+        if (this.getConfig().getOutputFile() != null) {
+            final Yaml snakeYaml = new Yaml();
+            String outputFilePath = this.getConfig().getOutputFile().getAbsolutePath();
+            System.out.println("creating output file: " + outputFilePath);
+            try {
+                FileWriter fileWriter = new FileWriter(outputFilePath);
+                fileWriter.write(snakeYaml.dumpAsMap(FolderReader.getMapFromYaml(this.getConfig())));
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

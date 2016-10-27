@@ -3,6 +3,8 @@ package cz.kinovic.yamlMerge.configuration;
 import org.kohsuke.args4j.Option;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ondrej Kinovic (ondrej@kinovic.cz)
@@ -16,8 +18,9 @@ public class Configuration {
 
     private File outputFile;
 
-    private String fileRegex = "yaml";
+    private String fileExtension = "yaml";
 
+    private List<String> errors = new ArrayList<>();
 
     public File getFolder() {
         return folder;
@@ -49,13 +52,33 @@ public class Configuration {
         this.outputFile = outputFile;
     }
 
-    public String getFileRegex() {
-        return fileRegex;
+    public String getFileExtension() {
+        return fileExtension;
     }
 
     @Option(name = "--extension", aliases = {"-e"},
             metaVar = "yaml", usage = "Extension which we should look for")
-    public void setFileRegex(String fileRegex) {
-        this.fileRegex = fileRegex;
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
+    }
+
+    public boolean validate() {
+        if (this.folder != null && !this.folder.isDirectory()) {
+            this.addError("Input is not a directory or does not exists.");
+        }
+
+        if (this.serverPort == 0 && this.outputFile == null) {
+            this.addError("You have to specify one of [server, output] parameter.");
+        }
+
+        return this.getErrors().size() == 0;
+    }
+
+    private void addError(String error) {
+        this.errors.add(error);
+    }
+
+    public List<String> getErrors() {
+        return errors;
     }
 }

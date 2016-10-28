@@ -70,6 +70,8 @@ public class Main {
             String outputFilePath = this.getConfig().getOutputFile().getAbsolutePath();
             System.out.println("creating output file: " + outputFilePath);
             try {
+                //noinspection ResultOfMethodCallIgnored
+                this.getConfig().getOutputFile().getParentFile().mkdirs();
                 FileWriter fileWriter = new FileWriter(outputFilePath);
                 fileWriter.write(snakeYaml.dumpAsMap(FolderReader.getMapFromYaml(this.getConfig())));
                 fileWriter.close();

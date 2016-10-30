@@ -2,11 +2,11 @@ package cz.kinovic.yamlMerge;
 
 import cz.kinovic.yamlMerge.configuration.Configuration;
 import cz.kinovic.yamlMerge.service.FolderReader;
+import cz.kinovic.yamlMerge.service.SimpleServer;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -73,10 +73,19 @@ public class Main {
                 //noinspection ResultOfMethodCallIgnored
                 this.getConfig().getOutputFile().getParentFile().mkdirs();
                 FileWriter fileWriter = new FileWriter(outputFilePath);
-                fileWriter.write(snakeYaml.dumpAsMap(FolderReader.getMapFromYaml(this.getConfig())));
+                fileWriter.write(snakeYaml.dumpAsMap(FolderReader.getMapFromYaml(this.getConfig().getFolder().getAbsolutePath(), this.getConfig().getFileExtension())));
                 fileWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        } else {
+            System.out.println("Running server on port: " + this.getConfig().getServerPort());
+            System.out.println("To stop it press Control + C");
+            try {
+                SimpleServer simpleServer = new SimpleServer(getConfig().getServerPort(), getConfig().getFolder().getAbsolutePath(), getConfig().getFileExtension());
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(1);
             }
         }
     }

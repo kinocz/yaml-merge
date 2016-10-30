@@ -18,11 +18,11 @@ import java.util.stream.Stream;
  * @since 27.10.16.
  */
 public class FolderReader {
-    public static Map getMapFromYaml(Configuration config) {
+    public static Map getMapFromYaml(String inputFolder, String extension) {
         try {
             final Yaml snakeYaml = new Yaml();
-            Stream<Path> paths = Files.find(Paths.get(config.getFolder().getAbsolutePath()), 100, (path, attr) ->
-                    String.valueOf(path).endsWith("." + config.getFileExtension()));
+            Stream<Path> paths = Files.find(Paths.get(inputFolder), 100, (path, attr) ->
+                    String.valueOf(path).endsWith("." + extension));
             Optional<Map> mapOptional = paths.map(filePath -> {
                 try {
                     return (Map) snakeYaml.load(new FileReader(filePath.toFile()));

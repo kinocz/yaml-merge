@@ -78,7 +78,7 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
+        } else if (this.getConfig().getServerPort() != 0) {
             System.out.println("Running server on port: " + this.getConfig().getServerPort());
             System.out.println("To stop it press Control + C");
             try {
@@ -87,6 +87,9 @@ public class Main {
                 e.printStackTrace();
                 System.exit(1);
             }
+        } else {
+            final Yaml snakeYaml = new Yaml();
+            System.out.println(snakeYaml.dumpAsMap(FolderReader.getMapFromYaml(this.getConfig().getFolder().getAbsolutePath(), this.getConfig().getFileExtension())));
         }
     }
 

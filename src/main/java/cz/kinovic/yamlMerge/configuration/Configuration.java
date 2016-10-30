@@ -67,10 +67,6 @@ public class Configuration {
             this.addError("Input is not a directory or does not exists.");
         }
 
-        if (this.serverPort == 0 && this.outputFile == null) {
-            this.addError("You have to specify one of [server, output] parameter.");
-        }
-
         return this.getErrors().size() == 0;
     }
 

@@ -82,7 +82,7 @@ public class Main {
             System.out.println("Running server on port: " + this.getConfig().getServerPort());
             System.out.println("To stop it press Control + C");
             try {
-                SimpleServer simpleServer = new SimpleServer(getConfig().getServerPort(), getConfig().getFolder().getAbsolutePath(), getConfig().getFileExtension());
+                SimpleServer simpleServer = new SimpleServer(getConfig());
             } catch (IOException e) {
                 e.printStackTrace();
                 System.exit(1);

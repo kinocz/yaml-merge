@@ -20,6 +20,10 @@ public class Configuration {
 
     private String fileExtension = "yaml";
 
+    private String serverYamlName = "index.yaml";
+
+    private File docRoot;
+
     private List<String> errors = new ArrayList<>();
 
     public File getFolder() {
@@ -60,6 +64,26 @@ public class Configuration {
             metaVar = "yaml", usage = "Extension which we should look for")
     public void setFileExtension(String fileExtension) {
         this.fileExtension = fileExtension;
+    }
+
+    public String getServerYamlName() {
+        return serverYamlName;
+    }
+
+    @Option(name = "--serverFilename", aliases = {"-f"}, depends = {"--server"},
+            metaVar = "index.yaml", usage = "Filename of generated yaml file.")
+    public void setServerYamlName(String serverYamlName) {
+        this.serverYamlName = serverYamlName;
+    }
+
+    public File getDocRoot() {
+        return docRoot;
+    }
+
+    @Option(name = "--serverDocumentRoot", aliases = {"-r"}, depends = {"--server"},
+            metaVar = "<docRootFolder>", usage = "Folder which we should serve files from.")
+    public void setDocRoot(File docRoot) {
+        this.docRoot = docRoot;
     }
 
     public boolean validate() {

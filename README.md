@@ -11,19 +11,26 @@ java -jar yaml-merge.jar --input /home/user/example --output /home/user/example.
 ```
 java -jar yaml-merge.jar --input /home/user/example --server 9090
 ```
-right now the server serves always created yaml file regardless the path. This will be changed in future, because I want to serve it static files too.
+default file name is index.yaml, if you want to change it use -f switch
 ### sample swagger ui use
-given code above
+
 ```
-http://petstore.swagger.io/?url=http://localhost:9090/swagger.yaml
+java -jar yaml-merge.jar --input /home/user/example --server 9090  --serverDocumentRoot /path/to/swagger/dist --serverFilename swagger.yaml
 ```
+then
+
+[http://localhost:9090/?url=http://localhost:9090/swagger.yaml](http://localhost:9090/?url=http://localhost:9090/swagger.yaml)
+
 ### output from console when wrong parameters are entered
 ```
 Usage:
- --extension (-e) yaml       : Extension which we should look for
- --input (-i) <folder>       : Path to source yaml files.
- --output (-o) <file>.yaml   : Where the result should be stored
- --server (-s) <server port> : Server port where it should start.
+ --extension (-e) yaml                  : Extension which we should look for
+ --input (-i) <folder>                  : Path to source yaml files.
+ --output (-o) <file>.yaml              : Where the result should be stored
+ --server (-s) <server port>            : Server port where it should start.
+ --serverDocumentRoot (-r)              : Folder which we should serve files
+ <docRootFolder>                          from.
+ --serverFilename (-f) index.yaml       : Filename of generated yaml file.
 ```
 
 ## future

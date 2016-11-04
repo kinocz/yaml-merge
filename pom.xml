@@ -6,7 +6,7 @@
 
     <groupId>cz.kinovic</groupId>
     <artifactId>yaml-merge</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <dependencies>
         <dependency>
             <groupId>args4j</groupId>

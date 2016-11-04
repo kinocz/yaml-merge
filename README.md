@@ -25,3 +25,8 @@ Usage:
  --output (-o) <file>.yaml   : Where the result should be stored
  --server (-s) <server port> : Server port where it should start.
 ```
+
+## future
+- make serving file(s) more configurable
+- add shell scripts (to make life easier)
+- add tests
